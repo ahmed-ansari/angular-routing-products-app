@@ -63,6 +63,6 @@ export class ProductData implements InMemoryDbService, InMemoryBackendConfig {
                 'category': 'Gaming',
             }
         ];
-        return { products };
+        return { productsz };
     }
 }

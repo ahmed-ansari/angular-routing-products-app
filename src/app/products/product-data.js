@@ -62,7 +62,7 @@ var ProductData = (function () {
                 'category': 'Gaming',
             }
         ];
-        return { products: products };
+        return { productsz: productsz };
     };
     return ProductData;
 }());

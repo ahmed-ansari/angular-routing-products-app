@@ -18,8 +18,9 @@ var ProductDetailComponent = (function () {
         this.pageTitle = 'Product Detail';
     }
     ProductDetailComponent.prototype.ngOnInit = function () {
-        var id = +this.route.snapshot.params['id'];
-        this.getProduct(id);
+        // let id =  +this.route.snapshot.params['id']
+        // this.getProduct(id);
+        this.product = this.route.snapshot.data['product'];
     };
     ProductDetailComponent.prototype.getProduct = function (id) {
         var _this = this;

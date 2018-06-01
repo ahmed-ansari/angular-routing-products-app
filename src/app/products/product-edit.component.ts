@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../messages/message.service';
 import { IProduct } from './product';
 import { ProductService } from './product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     templateUrl: './app/products/product-edit.component.html',
@@ -15,14 +15,18 @@ export class ProductEditComponent implements OnInit {
     errorMessage: string;
 
     product: IProduct;
+    private dataIsValid: { [key: string]: boolean } = {};
+
 
     constructor(private productService: ProductService,
                 private messageService: MessageService,
-            private route: ActivatedRoute) { }
+            private route: ActivatedRoute,
+            private router: Router) { }
 
     ngOnInit() {
-        let id =  +this.route.snapshot.params['id']
-        this.getProduct(id);
+        // let id =  +this.route.snapshot.params['id']
+        // this.getProduct(id);
+        this.onProductRetrieved(this.route.snapshot.data['product']); 
     }
 
     getProduct(id: number): void {
@@ -59,7 +63,7 @@ export class ProductEditComponent implements OnInit {
     }
 
     saveProduct(): void {
-        if (true === true) {
+        if (this.isValid(null)) {
             this.productService.saveProduct(this.product)
                 .subscribe(
                     () => this.onSaveComplete(`${this.product.productName} was saved`),
@@ -74,7 +78,46 @@ export class ProductEditComponent implements OnInit {
         if (message) {
             this.messageService.addMessage(message);
         }
+        // this.reset();
+        // Navigate back to the product list
+        this.router.navigate(['/products']);
 
         // Navigate back to the product list
+    }
+    reset(): void {
+        this.dataIsValid = null;
+        // this.currentProduct = null;
+        // this.originalProduct = null;
+    }
+
+    isValid(path: string): boolean {
+        this.validate();
+        if (path) {
+            return this.dataIsValid[path];
+        }
+        return (this.dataIsValid &&
+            Object.keys(this.dataIsValid).every(d => this.dataIsValid[d] === true));
+    }
+
+    validate(): void {
+        // Clear the validation object
+        this.dataIsValid = {};
+
+        // 'info' tab
+        if (this.product.productName &&
+            this.product.productName.length >= 3 &&
+            this.product.productCode) {
+            this.dataIsValid['info'] = true;
+        } else {
+            this.dataIsValid['info'] = false;
+        }
+
+        // 'tags' tab
+        if (this.product.category &&
+            this.product.category.length >= 3) {
+            this.dataIsValid['tags'] = true;
+        } else {
+            this.dataIsValid['tags'] = false;
+        }
     }
 }
