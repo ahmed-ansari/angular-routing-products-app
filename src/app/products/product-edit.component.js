@@ -11,12 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var message_service_1 = require("../messages/message.service");
 var product_service_1 = require("./product.service");
+var router_1 = require("@angular/router");
 var ProductEditComponent = (function () {
-    function ProductEditComponent(productService, messageService) {
+    function ProductEditComponent(productService, messageService, route) {
         this.productService = productService;
         this.messageService = messageService;
+        this.route = route;
         this.pageTitle = 'Product Edit';
     }
+    ProductEditComponent.prototype.ngOnInit = function () {
+        var id = +this.route.snapshot.params['id'];
+        this.getProduct(id);
+    };
     ProductEditComponent.prototype.getProduct = function (id) {
         var _this = this;
         this.productService.getProduct(id)
@@ -68,7 +74,8 @@ ProductEditComponent = __decorate([
         styleUrls: ['./app/products/product-edit.component.css']
     }),
     __metadata("design:paramtypes", [product_service_1.ProductService,
-        message_service_1.MessageService])
+        message_service_1.MessageService,
+        router_1.ActivatedRoute])
 ], ProductEditComponent);
 exports.ProductEditComponent = ProductEditComponent;
 //# sourceMappingURL=product-edit.component.js.map

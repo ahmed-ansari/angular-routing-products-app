@@ -3,7 +3,7 @@ var ProductData = (function () {
     function ProductData() {
     }
     ProductData.prototype.createDb = function () {
-        var products = [
+        var productsz = [
             {
                 'id': 1,
                 'productName': 'Leaf Rake',

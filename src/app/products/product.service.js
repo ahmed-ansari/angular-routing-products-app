@@ -19,7 +19,7 @@ require("rxjs/add/observable/of");
 var ProductService = (function () {
     function ProductService(http) {
         this.http = http;
-        this.baseUrl = 'api/products';
+        this.baseUrl = 'api/productsz';
     }
     ProductService.prototype.getProducts = function () {
         return this.http.get(this.baseUrl)

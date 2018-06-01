@@ -12,7 +12,7 @@ import { IProduct } from './product';
 
 @Injectable()
 export class ProductService {
-    private baseUrl = 'api/products';
+    private baseUrl = 'api/productsz';
 
     constructor(private http: Http) { }
 
